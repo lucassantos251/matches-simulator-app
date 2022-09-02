@@ -4,4 +4,5 @@
     <string name="cd_runner_1">Runner 1 image.</string>
     <string name="cd_runner_2">Runner 2 image.</string>
     <string name="txt_versus" translatable="false">X</string>
+    <string name="error_api">Unexpected error.</string>
 </resources>
