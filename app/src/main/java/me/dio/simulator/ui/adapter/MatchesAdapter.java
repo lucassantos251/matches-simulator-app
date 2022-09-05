@@ -1,6 +1,7 @@
 package me.dio.simulator.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 import me.dio.simulator.databinding.MatchItemBinding;
 import me.dio.simulator.domain.Match;
+import me.dio.simulator.ui.DetailActivity;
 
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHolder> {
 
@@ -20,6 +22,10 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
     public MatchesAdapter(List<Match> matches) {
         this.matches = matches;
+    }
+
+    public List<Match> getMatches() {
+        return matches;
     }
 
     @NonNull
@@ -39,8 +45,22 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
         holder.binding.tvRunnerName1.setText(match.getRunner1().getName());
         holder.binding.tvRunnerName2.setText(match.getRunner2().getName());
 
+        if(match.getRunner1().getScore() != null){
+            holder.binding.tvRunnerScore1.setText(String.valueOf(match.getRunner1().getScore()));
+        }
+
+        if(match.getRunner2().getScore() != null){
+            holder.binding.tvRunnerScore2.setText(String.valueOf(match.getRunner2().getScore()));
+        }
+
         Glide.with(context).load(match.getRunner1().getImage()).into(holder.binding.ivRunner1);
         Glide.with(context).load(match.getRunner2().getImage()).into(holder.binding.ivRunner2);
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra(DetailActivity.Extras.MATCH, match);
+            context.startActivity(intent);
+        });
     }
 
     @Override

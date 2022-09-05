@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private MatchesAPI matchesAPI;
-    private RecyclerView.Adapter matchesAdapter;
+    private MatchesAdapter matchesAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,7 +72,13 @@ public class MainActivity extends AppCompatActivity {
             view.animate().rotationBy(360).setDuration(1000).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    //TODO implementar o algoritmo de simulação de partidas
+                    Random random = new Random();
+                    for (int i = 0; i < matchesAdapter.getItemCount(); i++) {
+                        Match match = matchesAdapter.getMatches().get(i);
+                        match.getRunner1().setScore(random.nextInt(match.getRunner1().getStars() + 1));
+                        match.getRunner2().setScore(random.nextInt(match.getRunner2().getStars() + 1));
+                        matchesAdapter.notifyItemChanged(i);
+                    }
                 }
             });
         });
